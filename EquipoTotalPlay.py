@@ -1,3 +1,4 @@
+# Punto 1. Tecnologías
 from fastapi import FastAPI, HTTPException, Query, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
@@ -20,7 +21,7 @@ paquetes = {
     "premium": 600.00
 }
 
-
+# Validaciones
 @app.exception_handler(HTTPException)
 def manejar_errores_http(request: Request, exc: HTTPException):
     mensaje = f"Error: {exc.detail}"
@@ -161,7 +162,7 @@ def limpiar_y_validar_fecha(valor: Optional[str], generar_actual_si_vacio: bool 
         detail="Formato de fecha inválido. Usa 'YYYY-MM-DD HH:MM:SS' (ej. 2026-10-13 14:30:00) o 'YYYY-MM-DD'."
     )
 
-
+# Punto 6. Pydantic
 class ClienteCreate(BaseModel):
     nombre_cliente: str = Field(..., example="Juan Carlos Pérez", description="Nombre completo del cliente (solo letras)")
     direccion: str = Field(..., example="Av. Universidad 500", description="Dirección del domicilio del cliente")
@@ -219,7 +220,7 @@ def obtener_servicio_por_cliente(id_cliente: int):
             return servicio
     return None
 
-
+# Punto 2. Clientes
 @app.get("/v1/api/clientes", status_code=status.HTTP_200_OK, tags=["2. Clientes"])
 def consultar_clientes():
     return {
@@ -326,7 +327,7 @@ def desactivar_cliente(id_cliente: int):
         "cliente": cliente
     }
 
-
+# Punto 3. Servicios contratados
 @app.post("/v1/api/servicios", status_code=status.HTTP_201_CREATED, tags=["3. Servicios Contratados"])
 def registrar_servicio(datos: ServicioCreate):
     cliente = obtener_cliente_por_id(datos.id_cliente)
@@ -421,7 +422,7 @@ def actualizar_servicio(id_servicio: int, datos: ServicioUpdate):
         "servicio": servicio
     }
 
-
+# Punto 4. Consulta y reporte de servicios
 @app.get("/v1/api/reportes/servicios", status_code=status.HTTP_200_OK, tags=["4. Reportes"])
 def generar_reporte_servicios(
     fecha_inicio: Optional[date] = Query(default=None, description="Fecha inicial (YYYY-MM-DD)"),
@@ -474,7 +475,7 @@ def generar_reporte_servicios(
         "reporte": reporte_detallado
     }
 
-
+# Punto 5. Paquetes
 @app.get("/v1/api/paquetes", status_code=status.HTTP_200_OK, tags=["5. Paquetes"])
 def consultar_paquetes():
     return {
