@@ -22,7 +22,7 @@ API REST desarrollada con **Python**, **FastAPI** y **Pydantic** para la gestió
 1. **Clonar el repositorio:**
    ```bash
    git clone https://github.com/nomraclegna/Examen02-TotalPlay.git
-   cd NOMBRE-DEL-REPO
+   cd Examen02 - TotalPlay
    ```
 
 2. **Crear y activar un entorno virtual (opcional pero recomendado):**
